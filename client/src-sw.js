@@ -26,7 +26,21 @@ warmStrategyCache({
 
 registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
+// Implement asset caching using CacheFirst strategy
+const assetCache = new CacheFirst({
+  cacheName: 'asset-cache',
+  plugins: [
+    new CacheableResponsePlugin({
+      statuses: [0, 200],
+    }),
+    new ExpirationPlugin({
+      maxAgeSeconds: 7 * 24 * 60 * 60, // Adjust the cache duration as needed (e.g., 7 days)
+    }),
+  ],
+});
 
-// This means u need to register the assets you want to serve offline  thats what caching is
-// TODO: Implement asset caching
-registerRoute();
+// Register a route to cache assets
+registerRoute(
+  ({ request }) => request.destination === 'style' || request.destination === 'script' || request.destination === 'image',
+  assetCache
+);
