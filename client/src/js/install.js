@@ -1,30 +1,38 @@
-let deferredPrompt; // To store the event for later use
+let deferredPrompt;
 
-// Logic for installing the PWA
-window.addEventListener('beforeinstallprompt', (event) => {
-  event.preventDefault(); // Prevent the default browser prompt
-  deferredPrompt = event; // Store the event for later use
-});
-
-butInstall.addEventListener('click', async () => {
+async function installPWA() {
   if (deferredPrompt) {
-    // Show the browser prompt to install the PWA
-    deferredPrompt.prompt();
+    try {
+      await deferredPrompt.prompt();
 
-    // Wait for the user to respond to the prompt
-    const choiceResult = await deferredPrompt.userChoice;
+      const choiceResult = await deferredPrompt.userChoice;
 
-    if (choiceResult.outcome === 'accepted') {
-      console.log('PWA installed successfully!');
-    } else {
-      console.log('PWA installation declined.');
+      if (choiceResult.outcome === "accepted") {
+        console.log("PWA installed successfully!");
+      } else {
+        console.log("PWA installation declined.");
+      }
+
+      deferredPrompt = null;
+    } catch (error) {
+      console.error("Error while installing the PWA:", error);
     }
-
-    // Clear the deferredPrompt variable, as it can only be used once
-    deferredPrompt = null;
+  } else {
+    console.log("The PWA installation prompt is not available yet.");
   }
+}
+
+const installButton = document.getElementById("buttonInstall");
+installButton.addEventListener("click", installPWA);
+
+window.addEventListener("beforeinstallprompt", (event) => {
+  console.log("beforeinstallprompt event fired.");
+  event.preventDefault();
+  deferredPrompt = event;
 });
 
-window.addEventListener('appinstalled', (event) => {
-  console.log('PWA installed on the device.');
+window.addEventListener("appinstalled", (event) => {
+  console.log("PWA installed on the device.");
+
+  installButton.classList.add("hidden");
 });
