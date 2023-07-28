@@ -29,7 +29,7 @@ export const getDb = async () => {
   const store = tx.objectStore('jate');
   const result = await store.getAll();
   console.log('result.value', result);
-  return result;
+  return result?.value;
 };
 
 // TODO: Add logic for a method that gets all the content from the database
