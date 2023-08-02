@@ -36,3 +36,6 @@ window.addEventListener("appinstalled", (event) => {
 
   installButton.classList.add("hidden");
 });
+
+
+
