@@ -2,6 +2,8 @@
 
  ![Alt text](./assets/JATE.png "Photo of JATE UI")
 
+To watch a demo of the functionality, [click here](https://pwa-text-editor-uwa-4d3de5b7a94c.herokuapp.com/).
+
 
 In this project, I developed a Progressive Web App (PWA) text editor. This app enables users to create and save content directly within their web browsers. While the app functions seamlessly online, its true marvel lies in its offline capabilities. Even without an internet connection, users can continue to utilize the app with full functionality. Furthermore, users have the convenience of downloading the app and accessing it as a web app on their devices.
 
